@@ -2,15 +2,35 @@
 
  const {request,response}=require('express')
 
+// importo el servicio
+
+const{insertarJugador}=require('../services/servicios.js')
 
  //cuales son las operaciones que debe realizar mi servidor
- function registrarJugador(peticion=request,respuesta=response){
+ async function registrarJugador(peticion=request,respuesta=response){
 
-    respuesta.json({
+    //capturo los datos que llegan en el cueropo de patecion
+    let datosCliente=peticion.body
 
+
+//intentar grabar los datos en BD usando el servicio
+    try{
+
+    await insertarJugador(datosCliente)
+    respuesta.status(200).json({
         estado:true,
-        mensaje:"estoy registrando un jugador"
+        mensaje:"Exito registrando el jugador"
     })
+        
+    }catch(error){
+        respuesta.status(400).json({
+            estado:false,
+            mensaje:"upsss..."+error
+        })
+
+    }
+
+   
 
  }
  function buscarJugador(peticion=request,respuesta=response){

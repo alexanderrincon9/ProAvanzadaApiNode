@@ -14,6 +14,7 @@ class ServidorModelo {
 
         this.app = express()
         this.despertarBD()
+        this.llamarAuxiliar()
         this.enrutarPeticion()
 
     }
@@ -35,6 +36,10 @@ class ServidorModelo {
 
     conectarBD()  
 
+    }
+
+    llamarAuxiliar(){
+        this.app.use(express.json())
     }
 }
 
